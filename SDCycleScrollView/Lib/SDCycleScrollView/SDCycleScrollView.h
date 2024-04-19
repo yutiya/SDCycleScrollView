@@ -97,13 +97,13 @@ typedef enum {
 //////////////////////  数据源API //////////////////////
 
 /** 网络图片 url string 数组 */
-@property (nonatomic, strong) NSArray *imageURLStringsGroup;
+@property (nonatomic, copy) NSArray *imageURLStringsGroup;
 
 /** 每张图片对应要显示的文字数组 */
-@property (nonatomic, strong) NSArray *titlesGroup;
+@property (nonatomic, copy) NSArray *titlesGroup;
 
 /** 本地图片数组 */
-@property (nonatomic, strong) NSArray *localizationImageNamesGroup;
+@property (nonatomic, copy) NSArray *localizationImageNamesGroup;
 
 
 
@@ -195,6 +195,9 @@ typedef enum {
 
 /** 轮播文字label对齐方式 */
 @property (nonatomic, assign) NSTextAlignment titleLabelTextAlignment;
+
+/** 修改小圆点横向间距 */
+@property(nonatomic, assign) NSInteger spacingBetweenDots;
 
 /** 滚动手势禁用（文字轮播较实用） */
 - (void)disableScrollGesture;

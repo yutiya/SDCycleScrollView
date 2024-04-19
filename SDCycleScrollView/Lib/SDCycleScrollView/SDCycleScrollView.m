@@ -38,6 +38,8 @@
 
 #define kCycleScrollViewInitialPageControlDotSize CGSizeMake(10, 10)
 
+#define kDefaultSpacingBetweenDots 8
+
 NSString * const ID = @"SDCycleScrollViewCell";
 
 @interface SDCycleScrollView () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -45,7 +47,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
 
 @property (nonatomic, weak) UICollectionView *mainView; // 显示图片的collectionView
 @property (nonatomic, weak) UICollectionViewFlowLayout *flowLayout;
-@property (nonatomic, strong) NSArray *imagePathsGroup;
+@property (nonatomic, copy) NSArray *imagePathsGroup;
 @property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, assign) NSInteger totalItemsCount;
 @property (nonatomic, weak) UIControl *pageControl;
@@ -92,6 +94,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
     _currentPageDotColor = [UIColor whiteColor];
     _pageDotColor = [UIColor lightGrayColor];
     _bannerImageViewContentMode = UIViewContentModeScaleToFill;
+    _spacingBetweenDots = kDefaultSpacingBetweenDots;
     
     self.backgroundColor = [UIColor lightGrayColor];
     
@@ -362,6 +365,14 @@ NSString * const ID = @"SDCycleScrollViewCell";
     }
 }
 
+- (void)setSpacingBetweenDots:(NSInteger)spacingBetweenDots {
+    _spacingBetweenDots = spacingBetweenDots;
+    if ([self.pageControl isKindOfClass:[TAPageControl class]]) {
+        TAPageControl *pageControl = (TAPageControl *)_pageControl;
+        pageControl.spacingBetweenDots = spacingBetweenDots;
+    }
+}
+
 #pragma mark - actions
 
 - (void)setupTimer
@@ -397,6 +408,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
             pageControl.dotColor = self.currentPageDotColor;
             pageControl.userInteractionEnabled = NO;
             pageControl.currentPage = indexOnPageControl;
+            pageControl.spacingBetweenDots = self.spacingBetweenDots;
             [self addSubview:pageControl];
             _pageControl = pageControl;
         }
